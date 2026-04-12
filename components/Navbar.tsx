@@ -1,7 +1,7 @@
 'use client';
 import { GENERAL_INFO } from '@/lib/data';
 import { cn } from '@/lib/utils';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const MENU_LINKS = [
@@ -37,18 +37,9 @@ const MoonIcon = () => (
     </svg>
 );
 
-interface RippleState {
-    x: number;
-    y: number;
-    expanded: boolean;
-    toDark: boolean;
-}
-
 const ThemeToggle = () => {
     const [dark, setDark] = useState(false);
     const [mounted, setMounted] = useState(false);
-    const [ripple, setRipple] = useState<RippleState | null>(null);
-    const btnRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
         setMounted(true);
@@ -56,74 +47,33 @@ const ThemeToggle = () => {
     }, []);
 
     const toggle = () => {
-        if (ripple) return; // block during animation
-        const btn = btnRef.current;
-        if (!btn) return;
-
-        const rect = btn.getBoundingClientRect();
-        const x = rect.left + rect.width  / 2;
-        const y = rect.top  + rect.height / 2;
         const newDark = !dark;
+        setDark(newDark);
+        localStorage.setItem('theme', newDark ? 'dark' : 'light');
 
-        // 1. Mount the ripple circle at size 0
-        setRipple({ x, y, expanded: false, toDark: newDark });
-
-        // 2. Two rAFs so the initial paint (size 0) happens before the transition kicks in
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                setRipple(prev => prev ? { ...prev, expanded: true } : null);
-            });
-        });
-
-        // 3. Flip theme when the ripple is roughly half-expanded
+        // Add transition class, flip theme, then remove the class
+        document.documentElement.classList.add('theme-changing');
+        document.documentElement.classList.toggle('dark', newDark);
         setTimeout(() => {
-            setDark(newDark);
-            localStorage.setItem('theme', newDark ? 'dark' : 'light');
-            document.documentElement.classList.toggle('dark', newDark);
-        }, 420);
-
-        // 4. Clean up the overlay
-        setTimeout(() => setRipple(null), 880);
+            document.documentElement.classList.remove('theme-changing');
+        }, 550);
     };
 
     if (!mounted) return <div className="w-8 h-8" />;
 
     return (
-        <>
-            <button
-                ref={btnRef}
-                onClick={toggle}
-                className={cn(
-                    'w-8 h-8 flex items-center justify-center rounded-full',
-                    'border border-border/50 transition-all duration-300',
-                    'text-muted-foreground hover:text-primary hover:border-primary/40',
-                    'hover:bg-primary/5',
-                )}
-                aria-label="Toggle theme"
-            >
-                {dark ? <SunIcon /> : <MoonIcon />}
-            </button>
-
-            {/* ── Circular ripple overlay ── */}
-            {ripple && (
-                <div
-                    aria-hidden
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        zIndex: 150,
-                        pointerEvents: 'none',
-                        clipPath: ripple.expanded
-                            ? `circle(150vmax at ${ripple.x}px ${ripple.y}px)`
-                            : `circle(0px at ${ripple.x}px ${ripple.y}px)`,
-                        backgroundColor: ripple.toDark
-                            ? 'hsl(0, 0%, 13%)'
-                            : 'hsl(220, 30%, 97%)',
-                        transition: 'clip-path 0.78s cubic-bezier(0.76, 0, 0.24, 1)',
-                    }}
-                />
+        <button
+            onClick={toggle}
+            className={cn(
+                'w-8 h-8 flex items-center justify-center rounded-full',
+                'border border-border/50 transition-all duration-300',
+                'text-muted-foreground hover:text-primary hover:border-primary/40',
+                'hover:bg-primary/5',
             )}
-        </>
+            aria-label="Toggle theme"
+        >
+            {dark ? <SunIcon /> : <MoonIcon />}
+        </button>
     );
 };
 
@@ -134,28 +84,22 @@ const Navbar = () => {
     const [activeSection, setActiveSection] = useState('banner');
     const router = useRouter();
 
-    // Scroll-aware backdrop
     useEffect(() => {
         const handler = () => setScrolled(window.scrollY > 30);
         window.addEventListener('scroll', handler, { passive: true });
         return () => window.removeEventListener('scroll', handler);
     }, []);
 
-    // Active section tracker
     useEffect(() => {
         const updateActive = () => {
             const scrollPos = window.scrollY + NAV_OFFSET + 60;
             let current = 'banner';
-
             for (const link of MENU_LINKS) {
                 const el = document.getElementById(link.sectionId);
-                if (el && el.offsetTop <= scrollPos) {
-                    current = link.sectionId;
-                }
+                if (el && el.offsetTop <= scrollPos) current = link.sectionId;
             }
             setActiveSection(current);
         };
-
         window.addEventListener('scroll', updateActive, { passive: true });
         updateActive();
         return () => window.removeEventListener('scroll', updateActive);
@@ -170,10 +114,7 @@ const Navbar = () => {
             const id = url.slice(2);
             const el = document.getElementById(id);
             if (el) {
-                const top =
-                    el.getBoundingClientRect().top +
-                    window.scrollY -
-                    NAV_OFFSET;
+                const top = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
                 window.scrollTo({ top, behavior: 'smooth' });
                 return;
             }
@@ -183,7 +124,6 @@ const Navbar = () => {
 
     return (
         <>
-            {/* ── Top horizontal nav ── */}
             <header
                 className={cn(
                     'fixed top-0 left-0 right-0 z-[4] transition-all duration-300',
@@ -193,44 +133,31 @@ const Navbar = () => {
                 )}
             >
                 <div className="container flex items-center justify-between h-14">
-                    {/* Theme toggle — top left */}
                     <ThemeToggle />
 
-                    {/* Nav links — top right */}
                     <nav>
                         <ul className="flex items-center gap-6">
-                            {MENU_LINKS.map((link) => {
-                                const isActive = activeSection === link.sectionId;
-                                return (
-                                    <li key={link.name}>
-                                        <button
-                                            onClick={() => handleNavClick(link.url)}
-                                            className={cn(
-                                                'text-sm font-medium tracking-wide transition-all duration-300',
-                                                isActive
-                                                    ? 'text-primary'
-                                                    : 'text-muted-foreground hover:text-primary',
-                                            )}
-                                            style={
-                                                isActive
-                                                    ? {
-                                                          textShadow:
-                                                              '0 0 10px hsl(var(--primary) / 0.7), 0 0 22px hsl(var(--primary) / 0.35)',
-                                                      }
-                                                    : undefined
-                                            }
-                                        >
-                                            {link.name}
-                                        </button>
-                                    </li>
-                                );
-                            })}
+                            {MENU_LINKS.map((link) => (
+                                <li key={link.name}>
+                                    <button
+                                        onClick={() => handleNavClick(link.url)}
+                                        className={cn(
+                                            'text-sm font-medium tracking-wide transition-colors duration-300',
+                                            activeSection === link.sectionId
+                                                ? 'text-primary'
+                                                : 'text-muted-foreground hover:text-primary',
+                                        )}
+                                    >
+                                        {link.name}
+                                    </button>
+                                </li>
+                            ))}
                         </ul>
                     </nav>
                 </div>
             </header>
 
-            {/* ── Fixed social icons — bottom right ── */}
+            {/* Fixed social icons — bottom right */}
             <div className="fixed bottom-8 right-6 z-[4] flex flex-col items-center gap-4">
                 <a
                     href={GENERAL_INFO.githubProfile}

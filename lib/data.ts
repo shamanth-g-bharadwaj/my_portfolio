@@ -126,9 +126,6 @@ export const PROJECTS: IProject[] = [
                 <li>Published interactive Power BI dashboard for public access</li>
             </ul>`,
         techStack: ['Power BI', 'DAX', 'Power Query', 'FastF1 API', 'Python', 'pandas', 'PySpark'],
-        thumbnail: '/projects/thumbnail/f1-analytics.svg',
-        longThumbnail: '/projects/long/f1-analytics.svg',
-        images: ['/projects/images/f1-analytics-1.svg'],
     },
     {
         title: 'Asset Management Optimization Platform',
@@ -155,9 +152,6 @@ export const PROJECTS: IProject[] = [
                 <li>Built interactive Tableau and Power BI dashboards for portfolio simulation</li>
             </ul>`,
         techStack: ['Tableau', 'Excel', 'yfinance API', 'VAR Forecasting', 'CAGR Analysis', 'Python'],
-        thumbnail: '/projects/thumbnail/amop.svg',
-        longThumbnail: '/projects/long/amop.svg',
-        images: ['/projects/images/amop-1.svg'],
     },
     {
         title: 'Real Estate Buying Decision Prediction',
@@ -184,9 +178,6 @@ export const PROJECTS: IProject[] = [
                 <li>Performed hyperparameter tuning; achieved 75.63% accuracy and 0.93 AUC with Random Forest</li>
             </ul>`,
         techStack: ['Python', 'pandas', 'scikit-learn', 'Random Forest', 'Logistic Regression', 'KNN', 'matplotlib', 'seaborn'],
-        thumbnail: '/projects/thumbnail/real-estate-ml.svg',
-        longThumbnail: '/projects/long/real-estate-ml.svg',
-        images: ['/projects/images/real-estate-ml-1.svg'],
     },
     {
         title: 'Economic Forecasting & PPP Analysis',
@@ -213,9 +204,6 @@ export const PROJECTS: IProject[] = [
                 <li>Validated residuals with Ljung-Box diagnostics; produced forecast with confidence intervals</li>
             </ul>`,
         techStack: ['Python', 'pandas', 'statsmodels', 'ARIMA', 'ADF Testing', 'OLS', 'matplotlib', 'Jupyter Notebook'],
-        thumbnail: '/projects/thumbnail/economic-forecasting.svg',
-        longThumbnail: '/projects/long/economic-forecasting.svg',
-        images: ['/projects/images/economic-forecasting-1.svg'],
     },
     {
         title: 'Foodwill SDG 2 Analytics',
@@ -243,8 +231,5 @@ export const PROJECTS: IProject[] = [
                 <li>Built Power BI dashboard for NGO stakeholders to monitor SDG 2 progress and prioritise interventions</li>
             </ul>`,
         techStack: ['Power BI', 'Excel', 'FAO Dataset', 'SDG Indicators', 'Statistical Analysis', 'Forecasting', 'Python'],
-        thumbnail: '/projects/thumbnail/foodwill-analytics.svg',
-        longThumbnail: '/projects/long/foodwill-analytics.svg',
-        images: ['/projects/images/foodwill-analytics-1.svg'],
     },
 ];

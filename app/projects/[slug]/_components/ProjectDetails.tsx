@@ -179,7 +179,7 @@ const ProjectDetails = ({ project }: Props) => {
                     className="fade-in-later relative flex flex-col gap-2 max-w-[800px] mx-auto"
                     id="images"
                 >
-                    {project.images.map((image) => (
+                    {(project.images ?? []).map((image) => (
                         <div
                             key={image}
                             className="group relative w-full aspect-[750/400] bg-background-light"
