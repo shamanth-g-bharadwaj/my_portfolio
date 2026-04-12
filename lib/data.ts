@@ -126,6 +126,17 @@ export const PROJECTS: IProject[] = [
                 <li>Published interactive Power BI dashboard for public access</li>
             </ul>`,
         techStack: ['Power BI', 'DAX', 'Power Query', 'FastF1 API', 'Python', 'pandas', 'PySpark'],
+        thumbnail: '/projects/thumbnail/f1-analytics.jpg',
+        longThumbnail: '/projects/long/f1-analytics.jpg',
+        images: [
+            '/projects/images/f1-analytics-1.jpg',
+            '/projects/images/f1-analytics-2.jpg',
+            '/projects/images/f1-analytics-3.jpg',
+            '/projects/images/f1-analytics-4.jpg',
+            '/projects/images/f1-analytics-5.jpg',
+            '/projects/images/f1-analytics-6.jpg',
+            '/projects/images/f1-analytics-7.jpg',
+        ],
     },
     {
         title: 'Asset Management Optimization Platform',

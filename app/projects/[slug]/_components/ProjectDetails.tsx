@@ -7,6 +7,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
+import Image from 'next/image';
 import { useRef } from 'react';
 
 interface Props {
@@ -62,23 +63,26 @@ const ProjectDetails = ({ project }: Props) => {
         { scope: containerRef },
     );
 
-    // parallax effect on images
+    // scroll-reveal for each project image
     useGSAP(
         () => {
             gsap.utils
-                .toArray<HTMLDivElement>('#images > div')
-                .forEach((imageDiv, i) => {
-                    gsap.to(imageDiv, {
-                        backgroundPosition: `center 0%`,
-                        ease: 'none',
-                        scrollTrigger: {
-                            trigger: imageDiv,
-                            start: () => (i ? 'top bottom' : 'top 50%'),
-                            end: 'bottom top',
-                            scrub: true,
-                            // invalidateOnRefresh: true, // to make it responsive
+                .toArray<HTMLElement>('.project-image')
+                .forEach((el) => {
+                    gsap.fromTo(
+                        el,
+                        { opacity: 0, y: 40 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.7,
+                            ease: 'power2.out',
+                            scrollTrigger: {
+                                trigger: el,
+                                start: 'top 88%',
+                            },
                         },
-                    });
+                    );
                 });
         },
         { scope: containerRef },
@@ -175,31 +179,36 @@ const ProjectDetails = ({ project }: Props) => {
                     </div>
                 </div>
 
-                <div
-                    className="fade-in-later relative flex flex-col gap-2 max-w-[800px] mx-auto"
-                    id="images"
-                >
-                    {(project.images ?? []).map((image) => (
-                        <div
-                            key={image}
-                            className="group relative w-full aspect-[750/400] bg-background-light"
-                            style={{
-                                backgroundImage: `url(${image})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center 50%',
-                                backgroundRepeat: 'no-repeat',
-                            }}
-                        >
-                            <a
-                                href={image}
-                                target="_blank"
-                                className="absolute top-4 right-4 bg-background/70 text-foreground size-12 inline-flex justify-center items-center transition-all opacity-0 hover:bg-primary hover:text-primary-foreground group-hover:opacity-100"
+                {(project.images ?? []).length > 0 && (
+                    <div
+                        className="relative flex flex-col gap-6 max-w-[800px] mx-auto mt-8"
+                        id="images"
+                    >
+                        {(project.images ?? []).map((image, idx) => (
+                            <div
+                                key={image}
+                                className="project-image group relative w-full overflow-hidden"
                             >
-                                <ExternalLink />
-                            </a>
-                        </div>
-                    ))}
-                </div>
+                                <Image
+                                    src={image}
+                                    alt={`${project.title} — screenshot ${idx + 1}`}
+                                    width={1200}
+                                    height={800}
+                                    className="w-full h-auto"
+                                    priority={idx === 0}
+                                />
+                                <a
+                                    href={image}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="absolute top-4 right-4 bg-background/70 text-foreground size-12 inline-flex justify-center items-center transition-all opacity-0 hover:bg-primary hover:text-primary-foreground group-hover:opacity-100"
+                                >
+                                    <ExternalLink />
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     );

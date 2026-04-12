@@ -110,9 +110,9 @@ const Project = ({ index, project, selectedProject, onMouseEnter }: Props) => {
                 <Image
                     src={project.thumbnail}
                     alt="Project"
-                    width={300}
-                    height={200}
-                    className="w-full object-cover mb-6 aspect-[3/2] object-top"
+                    width={1200}
+                    height={900}
+                    className="w-full h-auto mb-6"
                     key={project.slug}
                     loading="lazy"
                 />
