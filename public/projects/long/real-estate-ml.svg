@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="550" viewBox="0 0 400 550">
+  <rect width="400" height="550" fill="#0f172a"/>
+  <rect x="0" y="0" width="400" height="4" fill="#10b981"/>
+  <rect x="0" y="546" width="400" height="4" fill="#10b981"/>
+  <circle cx="200" cy="275" r="133" fill="#10b981" opacity="0.04"/>
+  <text x="200" y="243" text-anchor="middle" font-size="24" font-weight="bold" font-family="Arial,sans-serif" fill="white">Real Estate</text>
+<text x="200" y="275" text-anchor="middle" font-size="24" font-weight="bold" font-family="Arial,sans-serif" fill="white">ML Prediction</text>
+
+  <text x="200" y="321" text-anchor="middle" font-size="14" font-family="Arial,sans-serif" fill="#10b981" opacity="0.85">Python · scikit-learn · RF</text>
+  <text x="200" y="538" text-anchor="middle" font-size="10" font-family="Arial,sans-serif" fill="white" opacity="0.3">[ placeholder — replace with screenshot ]</text>
+</svg>

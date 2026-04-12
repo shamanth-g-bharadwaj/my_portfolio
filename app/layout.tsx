@@ -1,0 +1,70 @@
+import type { Metadata } from 'next';
+import { Anton, Roboto_Flex } from 'next/font/google';
+import { ReactLenis } from 'lenis/react';
+
+import 'lenis/dist/lenis.css';
+import './globals.css';
+import Footer from '@/components/Footer';
+import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
+import ParticleBackground from '@/components/ParticleBackground';
+import Navbar from '@/components/Navbar';
+import CustomCursor from '@/components/CustomCursor';
+import Preloader from '../components/Preloader';
+import StickyEmail from './_components/StickyEmail';
+
+const antonFont = Anton({
+    weight: '400',
+    style: 'normal',
+    subsets: ['latin'],
+    variable: '--font-anton',
+});
+
+const robotoFlex = Roboto_Flex({
+    weight: ['100', '400', '500', '600', '700', '800'],
+    style: 'normal',
+    subsets: ['latin'],
+    variable: '--font-roboto-flex',
+});
+
+export const metadata: Metadata = {
+    title: 'Portfolio — Shamanth G Bharadwaj',
+    description:
+        'BI & Data Engineer | Power BI · dbt · Python · SQL · Data Analytics',
+};
+
+export default function RootLayout({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
+    return (
+        <html lang="en" suppressHydrationWarning>
+            {/* Theme initialisation — runs before paint to prevent flash */}
+            <head>
+                <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme')||'light';if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();` }} />
+            </head>
+            {/* Add your Google Analytics tag here: <GoogleAnalytics gaId="G-XXXXXXXXXX" /> */}
+            <body
+                className={`${antonFont.variable} ${robotoFlex.variable} antialiased`}
+            >
+                <ReactLenis
+                    root
+                    options={{
+                        lerp: 0.1,
+                        duration: 1.4,
+                    }}
+                >
+                    <Navbar />
+                    <main>{children}</main>
+                    <Footer />
+
+                    <CustomCursor />
+                    <Preloader />
+                    <ScrollProgressIndicator />
+                    <ParticleBackground />
+                    <StickyEmail />
+                </ReactLenis>
+            </body>
+        </html>
+    );
+}
