@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <polygon points="16,2 30,10 30,22 16,30 2,22 2,10" fill="none" stroke="#FF694A" stroke-width="2.5"/>
+  <polygon points="16,8 24,13 24,19 16,24 8,19 8,13" fill="#FF694A" opacity="0.25"/>
+  <text x="16" y="20" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="9" fill="#FF694A">dbt</text>
+</svg>
