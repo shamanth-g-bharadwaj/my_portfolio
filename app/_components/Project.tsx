@@ -1,16 +1,12 @@
 import TransitionLink from '@/components/TransitionLink';
-import { cn } from '@/lib/utils';
 import { IProject } from '@/types';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import Image from 'next/image';
 import { useRef } from 'react';
 
 interface Props {
     index: number;
     project: IProject;
-    selectedProject: string | null;
-    onMouseEnter: (_slug: string) => void;
 }
 
 /*
@@ -30,7 +26,7 @@ interface Props {
 
 gsap.registerPlugin(useGSAP);
 
-const Project = ({ index, project, selectedProject, onMouseEnter }: Props) => {
+const Project = ({ index, project }: Props) => {
     const externalLinkSVGRef = useRef<SVGSVGElement>(null);
 
     const { context, contextSafe } = useGSAP(() => {}, {
@@ -39,8 +35,6 @@ const Project = ({ index, project, selectedProject, onMouseEnter }: Props) => {
     });
 
     const handleMouseEnter = contextSafe?.(() => {
-        onMouseEnter(project.slug);
-
         const arrowLine = externalLinkSVGRef.current?.querySelector(
             '#arrow-line',
         ) as SVGPathElement;
@@ -107,19 +101,6 @@ const Project = ({ index, project, selectedProject, onMouseEnter }: Props) => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            {selectedProject === null && (
-                <Image
-                    src={project.thumbnail}
-                    alt="Project"
-                    width="300"
-                    height="200"
-                    className={cn(
-                        'w-full object-cover mb-6 aspect-[3/2] object-top',
-                    )}
-                    key={project.slug}
-                    loading="lazy"
-                />
-            )}
             <div className="flex gap-2 md:gap-5">
                 <div className="font-anton text-muted-foreground">
                     _{(index + 1).toString().padStart(2, '0')}.

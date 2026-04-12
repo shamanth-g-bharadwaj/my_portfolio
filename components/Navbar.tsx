@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const MENU_LINKS = [
-    { name: 'Home',       url: '/' },
-    { name: 'About Me',   url: '/#about-me' },
-    { name: 'Experience', url: '/#my-experience' },
-    { name: 'Education',  url: '/#education' },
-    { name: 'Projects',   url: '/#selected-projects' },
+    { name: 'Home',       url: '/',                    sectionId: 'banner' },
+    { name: 'About Me',   url: '/#about-me',           sectionId: 'about-me' },
+    { name: 'Experience', url: '/#my-experience',      sectionId: 'my-experience' },
+    { name: 'Education',  url: '/#education',          sectionId: 'education' },
+    { name: 'Projects',   url: '/#selected-projects',  sectionId: 'selected-projects' },
 ];
 
 const GitHubIcon = () => (
@@ -25,14 +25,14 @@ const LinkedInIcon = () => (
 );
 
 const SunIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="4"/>
         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
     </svg>
 );
 
 const MoonIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
     </svg>
 );
@@ -43,15 +43,20 @@ const ThemeToggle = () => {
 
     useEffect(() => {
         setMounted(true);
-        const isDark = document.documentElement.classList.contains('dark');
-        setDark(isDark);
+        setDark(document.documentElement.classList.contains('dark'));
     }, []);
 
     const toggle = () => {
         const newDark = !dark;
         setDark(newDark);
         localStorage.setItem('theme', newDark ? 'dark' : 'light');
+
+        // Add transition class, flip theme, then remove the class
+        document.documentElement.classList.add('theme-changing');
         document.documentElement.classList.toggle('dark', newDark);
+        setTimeout(() => {
+            document.documentElement.classList.remove('theme-changing');
+        }, 550);
     };
 
     if (!mounted) return <div className="w-8 h-8" />;
@@ -76,12 +81,28 @@ const NAV_OFFSET = 60;
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState('banner');
     const router = useRouter();
 
     useEffect(() => {
         const handler = () => setScrolled(window.scrollY > 30);
         window.addEventListener('scroll', handler, { passive: true });
         return () => window.removeEventListener('scroll', handler);
+    }, []);
+
+    useEffect(() => {
+        const updateActive = () => {
+            const scrollPos = window.scrollY + NAV_OFFSET + 60;
+            let current = 'banner';
+            for (const link of MENU_LINKS) {
+                const el = document.getElementById(link.sectionId);
+                if (el && el.offsetTop <= scrollPos) current = link.sectionId;
+            }
+            setActiveSection(current);
+        };
+        window.addEventListener('scroll', updateActive, { passive: true });
+        updateActive();
+        return () => window.removeEventListener('scroll', updateActive);
     }, []);
 
     const handleNavClick = (url: string) => {
@@ -93,10 +114,7 @@ const Navbar = () => {
             const id = url.slice(2);
             const el = document.getElementById(id);
             if (el) {
-                const top =
-                    el.getBoundingClientRect().top +
-                    window.scrollY -
-                    NAV_OFFSET;
+                const top = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
                 window.scrollTo({ top, behavior: 'smooth' });
                 return;
             }
@@ -106,7 +124,6 @@ const Navbar = () => {
 
     return (
         <>
-            {/* ── Top horizontal nav ── */}
             <header
                 className={cn(
                     'fixed top-0 left-0 right-0 z-[4] transition-all duration-300',
@@ -115,18 +132,19 @@ const Navbar = () => {
                         : 'bg-transparent',
                 )}
             >
-                <div className="container flex items-center justify-between h-14">
-                    {/* Theme toggle — top left */}
-                    <ThemeToggle />
-
-                    {/* Nav links — top right */}
+                <div className="container flex items-center justify-end gap-5 h-14">
                     <nav>
                         <ul className="flex items-center gap-6">
                             {MENU_LINKS.map((link) => (
                                 <li key={link.name}>
                                     <button
                                         onClick={() => handleNavClick(link.url)}
-                                        className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 font-medium tracking-wide"
+                                        className={cn(
+                                            'text-sm font-medium tracking-wide transition-colors duration-300',
+                                            activeSection === link.sectionId
+                                                ? 'text-primary'
+                                                : 'text-muted-foreground hover:text-primary',
+                                        )}
                                     >
                                         {link.name}
                                     </button>
@@ -134,10 +152,13 @@ const Navbar = () => {
                             ))}
                         </ul>
                     </nav>
+
+                    {/* Theme toggle — far right */}
+                    <ThemeToggle />
                 </div>
             </header>
 
-            {/* ── Fixed social icons — bottom right ── */}
+            {/* Fixed social icons — bottom right */}
             <div className="fixed bottom-8 right-6 z-[4] flex flex-col items-center gap-4">
                 <a
                     href={GENERAL_INFO.githubProfile}

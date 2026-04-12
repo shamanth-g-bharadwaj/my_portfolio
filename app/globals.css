@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-    /* ── Light theme (default) ── */
+    /* ── Light theme (default) — teal + amber ── */
     :root {
         --background: 220 30% 97%;
         --background-light: 220 20% 93%;
@@ -14,27 +14,27 @@
         --popover: 0 0% 100%;
         --popover-foreground: 215 30% 10%;
 
-        --primary: 217 85% 50%;
+        --primary: 171 65% 36%;
         --primary-foreground: 0 0% 100%;
-        --secondary: 255 70% 58%;
+        --secondary: 35 82% 50%;
         --secondary-foreground: 0 0% 100%;
         --muted: 220 20% 91%;
         --muted-foreground: 215 12% 46%;
-        --accent: 220 20% 88%;
-        --accent-foreground: 215 30% 10%;
+        --accent: 171 40% 90%;
+        --accent-foreground: 171 65% 20%;
         --destructive: 0 72% 51%;
         --destructive-foreground: 0 0% 100%;
         --border: 220 20% 84%;
         --input: 220 20% 90%;
-        --ring: 217 85% 50%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
+        --ring: 171 65% 36%;
+        --chart-1: 171 65% 36%;
+        --chart-2: 35 82% 50%;
+        --chart-3: 200 70% 45%;
+        --chart-4: 280 65% 55%;
         --chart-5: 340 75% 55%;
     }
 
-    /* ── Dark theme ── */
+    /* ── Dark theme — electric blue + indigo ── */
     .dark {
         --background: 0 0% 13%;
         --background-light: 0 0% 19%;
@@ -86,4 +86,18 @@
     .markdown-text ul {
         @apply pl-5 mt-2 list-disc;
     }
+}
+
+/* ── Smooth theme fade ──────────────────────────────────────────────────────
+   The .theme-changing class is added to <html> for ~550ms during a theme
+   toggle, giving background/color/border a smooth crossfade. It is removed
+   afterwards so it never interferes with GSAP or hover transitions.
+   -------------------------------------------------------------------------- */
+.theme-changing *,
+.theme-changing *::before,
+.theme-changing *::after {
+    transition:
+        background-color 0.45s ease,
+        color 0.35s ease,
+        border-color 0.45s ease !important;
 }
