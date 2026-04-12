@@ -70,17 +70,21 @@ const Skills = () => {
                                         className="slide-up flex gap-3.5 items-center leading-none"
                                         key={item.name}
                                     >
-                                        <div className="flex-shrink-0">
-                                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                                            <img
-                                                src={item.icon}
-                                                alt={item.name}
-                                                width={40}
-                                                height={40}
-                                                loading="eager"
-                                                className="max-h-10 w-auto brightness-0 dark:invert"
-                                            />
-                                        </div>
+                                        <div
+                                            className="flex-shrink-0 w-9 h-9 bg-foreground"
+                                            role="img"
+                                            aria-label={item.name}
+                                            style={{
+                                                maskImage: `url('${item.icon}')`,
+                                                WebkitMaskImage: `url('${item.icon}')`,
+                                                maskSize: 'contain',
+                                                WebkitMaskSize: 'contain',
+                                                maskRepeat: 'no-repeat',
+                                                WebkitMaskRepeat: 'no-repeat',
+                                                maskPosition: 'center',
+                                                WebkitMaskPosition: 'center',
+                                            }}
+                                        />
                                         <span className="text-2xl capitalize">
                                             {item.name}
                                         </span>
