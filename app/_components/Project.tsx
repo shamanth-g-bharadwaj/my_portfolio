@@ -144,6 +144,9 @@ const Project = ({ index, project }: Props) => {
                                 </div>
                             ))}
                     </div>
+                    <p className="mt-3 text-xs text-primary/0 group-hover:text-primary/60 transition-colors duration-500 tracking-widest uppercase">
+                        Click to explore →
+                    </p>
                 </div>
             </div>
         </TransitionLink>

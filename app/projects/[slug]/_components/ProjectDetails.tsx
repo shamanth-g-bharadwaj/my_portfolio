@@ -176,6 +176,12 @@ const ProjectDetails = ({ project }: Props) => {
                         </div>
 
                         <ArrowAnimation />
+
+                        {(project.images ?? []).length > 0 && (
+                            <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] tracking-[0.25em] uppercase text-muted-foreground/50 animate-pulse whitespace-nowrap">
+                                scroll for screenshots
+                            </p>
+                        )}
                     </div>
                 </div>
 

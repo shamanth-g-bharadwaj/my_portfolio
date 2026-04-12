@@ -163,6 +163,13 @@ export const PROJECTS: IProject[] = [
                 <li>Built interactive Tableau and Power BI dashboards for portfolio simulation</li>
             </ul>`,
         techStack: ['Tableau', 'Excel', 'yfinance API', 'VAR Forecasting', 'CAGR Analysis', 'Python'],
+        thumbnail: '/projects/thumbnail/amop.jpg',
+        longThumbnail: '/projects/long/amop.jpg',
+        images: [
+            '/projects/images/amop-1.jpg',
+            '/projects/images/amop-2.jpg',
+            '/projects/images/amop-3.jpg',
+        ],
     },
     {
         title: 'Real Estate Buying Decision Prediction',
@@ -189,6 +196,13 @@ export const PROJECTS: IProject[] = [
                 <li>Performed hyperparameter tuning; achieved 75.63% accuracy and 0.93 AUC with Random Forest</li>
             </ul>`,
         techStack: ['Python', 'pandas', 'scikit-learn', 'Random Forest', 'Logistic Regression', 'KNN', 'matplotlib', 'seaborn'],
+        thumbnail: '/projects/thumbnail/real-estate-ml.jpg',
+        longThumbnail: '/projects/long/real-estate-ml.jpg',
+        images: [
+            '/projects/images/real-estate-ml-1.jpg',
+            '/projects/images/real-estate-ml-2.jpg',
+            '/projects/images/real-estate-ml-3.jpg',
+        ],
     },
     {
         title: 'Economic Forecasting & PPP Analysis',
@@ -215,6 +229,13 @@ export const PROJECTS: IProject[] = [
                 <li>Validated residuals with Ljung-Box diagnostics; produced forecast with confidence intervals</li>
             </ul>`,
         techStack: ['Python', 'pandas', 'statsmodels', 'ARIMA', 'ADF Testing', 'OLS', 'matplotlib', 'Jupyter Notebook'],
+        thumbnail: '/projects/thumbnail/economic-forecasting.jpg',
+        longThumbnail: '/projects/long/economic-forecasting.jpg',
+        images: [
+            '/projects/images/economic-forecasting-1.jpg',
+            '/projects/images/economic-forecasting-2.jpg',
+            '/projects/images/economic-forecasting-3.jpg',
+        ],
     },
     {
         title: 'Foodwill SDG 2 Analytics',
@@ -242,5 +263,12 @@ export const PROJECTS: IProject[] = [
                 <li>Built Power BI dashboard for NGO stakeholders to monitor SDG 2 progress and prioritise interventions</li>
             </ul>`,
         techStack: ['Power BI', 'Excel', 'FAO Dataset', 'SDG Indicators', 'Statistical Analysis', 'Forecasting', 'Python'],
+        thumbnail: '/projects/thumbnail/foodwill-analytics.jpg',
+        longThumbnail: '/projects/long/foodwill-analytics.jpg',
+        images: [
+            '/projects/images/foodwill-analytics-1.jpg',
+            '/projects/images/foodwill-analytics-2.jpg',
+            '/projects/images/foodwill-analytics-3.jpg',
+        ],
     },
 ];
