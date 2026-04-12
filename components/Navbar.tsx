@@ -132,9 +132,7 @@ const Navbar = () => {
                         : 'bg-transparent',
                 )}
             >
-                <div className="container flex items-center justify-between h-14">
-                    <ThemeToggle />
-
+                <div className="container flex items-center justify-end gap-5 h-14">
                     <nav>
                         <ul className="flex items-center gap-6">
                             {MENU_LINKS.map((link) => (
@@ -154,6 +152,9 @@ const Navbar = () => {
                             ))}
                         </ul>
                     </nav>
+
+                    {/* Theme toggle — far right */}
+                    <ThemeToggle />
                 </div>
             </header>
 

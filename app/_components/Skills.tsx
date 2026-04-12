@@ -77,7 +77,8 @@ const Skills = () => {
                                                 alt={item.name}
                                                 width={40}
                                                 height={40}
-                                                className="max-h-10 w-auto"
+                                                loading="eager"
+                                                className="max-h-10 w-auto brightness-0 dark:invert"
                                             />
                                         </div>
                                         <span className="text-2xl capitalize">

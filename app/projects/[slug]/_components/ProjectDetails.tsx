@@ -94,10 +94,10 @@ const ProjectDetails = ({ project }: Props) => {
                 <TransitionLink
                     back
                     href="/"
-                    className="mb-16 inline-flex gap-2 items-center group h-12"
+                    className="mb-16 w-fit flex gap-2.5 items-center group px-4 py-2.5 rounded-md border border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200 text-muted-foreground hover:text-primary"
                 >
-                    <ArrowLeft className="group-hover:-translate-x-1 group-hover:text-primary transition-all duration-300" />
-                    Back
+                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-200 flex-shrink-0" />
+                    <span className="text-sm font-medium">Back</span>
                 </TransitionLink>
 
                 <div
