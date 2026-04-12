@@ -4,7 +4,6 @@ import { MY_STACK } from '@/lib/data';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import Image from 'next/image';
 import React, { useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -17,18 +16,18 @@ const Skills = () => {
             const slideUpEl = containerRef.current?.querySelectorAll('.slide-up');
             if (!slideUpEl?.length) return;
 
-            gsap.timeline({
+            gsap.from(slideUpEl, {
+                opacity: 0,
+                y: 30,
+                duration: 0.5,
+                ease: 'power2.out',
+                stagger: 0.04,
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: 'top 80%',
-                    end: 'bottom 80%',
-                    scrub: 0.5,
+                    toggleActions: 'play none none none',
+                    once: true,
                 },
-            }).from('.slide-up', {
-                opacity: 0,
-                y: 40,
-                ease: 'none',
-                stagger: 0.4,
             });
         },
         { scope: containerRef },
@@ -71,16 +70,21 @@ const Skills = () => {
                                         className="slide-up flex gap-3.5 items-center leading-none"
                                         key={item.name}
                                     >
-                                        <div className="flex-shrink-0">
-                                            <Image
-                                                src={item.icon}
-                                                alt={item.name}
-                                                width={40}
-                                                height={40}
-                                                loading="eager"
-                                                className="max-h-10 w-auto brightness-0 dark:invert"
-                                            />
-                                        </div>
+                                        <div
+                                            className="flex-shrink-0 w-9 h-9 bg-foreground"
+                                            role="img"
+                                            aria-label={item.name}
+                                            style={{
+                                                maskImage: `url('${item.icon}')`,
+                                                WebkitMaskImage: `url('${item.icon}')`,
+                                                maskSize: 'contain',
+                                                WebkitMaskSize: 'contain',
+                                                maskRepeat: 'no-repeat',
+                                                WebkitMaskRepeat: 'no-repeat',
+                                                maskPosition: 'center',
+                                                WebkitMaskPosition: 'center',
+                                            }}
+                                        />
                                         <span className="text-2xl capitalize">
                                             {item.name}
                                         </span>
