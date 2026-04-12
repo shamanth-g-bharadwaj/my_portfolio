@@ -16,18 +16,18 @@ const Skills = () => {
             const slideUpEl = containerRef.current?.querySelectorAll('.slide-up');
             if (!slideUpEl?.length) return;
 
-            gsap.timeline({
+            gsap.from(slideUpEl, {
+                opacity: 0,
+                y: 30,
+                duration: 0.5,
+                ease: 'power2.out',
+                stagger: 0.04,
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: 'top 80%',
-                    end: 'bottom 80%',
-                    scrub: 0.5,
+                    toggleActions: 'play none none none',
+                    once: true,
                 },
-            }).from('.slide-up', {
-                opacity: 0,
-                y: 40,
-                ease: 'none',
-                stagger: 0.4,
             });
         },
         { scope: containerRef },
