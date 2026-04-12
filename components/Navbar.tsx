@@ -24,7 +24,55 @@ const LinkedInIcon = () => (
     </svg>
 );
 
-const NAV_OFFSET = 60; // height of fixed navbar in px
+const SunIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+);
+
+const MoonIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+);
+
+const ThemeToggle = () => {
+    const [dark, setDark] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+        const isDark = document.documentElement.classList.contains('dark');
+        setDark(isDark);
+    }, []);
+
+    const toggle = () => {
+        const newDark = !dark;
+        setDark(newDark);
+        localStorage.setItem('theme', newDark ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', newDark);
+    };
+
+    if (!mounted) return <div className="w-8 h-8" />;
+
+    return (
+        <button
+            onClick={toggle}
+            className={cn(
+                'w-8 h-8 flex items-center justify-center rounded-full',
+                'border border-border/50 transition-all duration-300',
+                'text-muted-foreground hover:text-primary hover:border-primary/40',
+                'hover:bg-primary/5',
+            )}
+            aria-label="Toggle theme"
+        >
+            {dark ? <SunIcon /> : <MoonIcon />}
+        </button>
+    );
+};
+
+const NAV_OFFSET = 60;
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -67,7 +115,11 @@ const Navbar = () => {
                         : 'bg-transparent',
                 )}
             >
-                <div className="container flex items-center justify-end h-14">
+                <div className="container flex items-center justify-between h-14">
+                    {/* Theme toggle — top left */}
+                    <ThemeToggle />
+
+                    {/* Nav links — top right */}
                     <nav>
                         <ul className="flex items-center gap-6">
                             {MENU_LINKS.map((link) => (

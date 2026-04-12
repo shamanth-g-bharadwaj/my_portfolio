@@ -157,7 +157,7 @@ const Banner = () => {
                     </div>
 
                     {/* ── RIGHT COLUMN — photo top-anchored, then stats below ── */}
-                    <div className="slide-up-and-fade flex flex-col items-center gap-10 justify-start pt-8 relative z-10">
+                    <div className="slide-up-and-fade flex flex-col items-center gap-10 justify-start pt-8">
 
                         {/* Profile photo */}
                         <ProfilePhoto />

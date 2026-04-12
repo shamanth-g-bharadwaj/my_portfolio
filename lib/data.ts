@@ -154,7 +154,7 @@ export const PROJECTS: IProject[] = [
                 <li>Evaluated VAR vs ML forecasting approaches; selected VAR based on empirical performance</li>
                 <li>Built interactive Tableau and Power BI dashboards for portfolio simulation</li>
             </ul>`,
-        techStack: ['Power BI', 'Tableau', 'Excel', 'yfinance API', 'VAR Forecasting', 'CAGR Analysis', 'Python'],
+        techStack: ['Tableau', 'Excel', 'yfinance API', 'VAR Forecasting', 'CAGR Analysis', 'Python'],
         thumbnail: '/projects/thumbnail/amop.svg',
         longThumbnail: '/projects/long/amop.svg',
         images: ['/projects/images/amop-1.svg'],

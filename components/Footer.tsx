@@ -12,9 +12,20 @@ const Footer = () => {
                     {GENERAL_INFO.email}
                 </a>
 
-                <p className="text-xs text-muted-foreground/50 mt-2">
-                    Designed &amp; developed by Shamanth G Bharadwaj, with Claude
-                </p>
+                <div className="mt-2 space-y-1.5">
+                    <p className="text-xs text-muted-foreground/60 tracking-wide">
+                        Designed &amp; developed by{' '}
+                        <span className="text-primary font-semibold">
+                            Shamanth G Bharadwaj
+                        </span>
+                    </p>
+                    <p className="text-xs text-muted-foreground/40 tracking-wide">
+                        Co-authored with{' '}
+                        <span className="text-secondary/60 font-medium">Claude</span>
+                        {' '}·{' '}
+                        <span>Anthropic</span>
+                    </p>
+                </div>
             </div>
         </footer>
     );

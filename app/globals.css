@@ -3,7 +3,39 @@
 @tailwind utilities;
 
 @layer base {
+    /* ── Light theme (default) ── */
     :root {
+        --background: 220 30% 97%;
+        --background-light: 220 20% 93%;
+        --foreground: 215 30% 10%;
+
+        --card: 0 0% 100%;
+        --card-foreground: 215 30% 10%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 215 30% 10%;
+
+        --primary: 217 85% 50%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 255 70% 58%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 220 20% 91%;
+        --muted-foreground: 215 12% 46%;
+        --accent: 220 20% 88%;
+        --accent-foreground: 215 30% 10%;
+        --destructive: 0 72% 51%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 220 20% 84%;
+        --input: 220 20% 90%;
+        --ring: 217 85% 50%;
+        --chart-1: 220 70% 50%;
+        --chart-2: 160 60% 45%;
+        --chart-3: 30 80% 55%;
+        --chart-4: 280 65% 60%;
+        --chart-5: 340 75% 55%;
+    }
+
+    /* ── Dark theme ── */
+    .dark {
         --background: 0 0% 13%;
         --background-light: 0 0% 19%;
         --foreground: 0 0% 87%;

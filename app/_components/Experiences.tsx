@@ -60,17 +60,17 @@ const Experiences = () => {
                     {MY_EXPERIENCE.map((item) => (
                         <div key={`${item.company}-${item.duration}`} className="experience-item">
                             <div className="flex items-center gap-4 mb-1">
-                                <p className="text-xl font-semibold text-primary">
+                                <p className="text-2xl md:text-3xl font-semibold text-primary">
                                     {item.company}
                                 </p>
                             </div>
-                            <p className="text-5xl font-anton leading-none mt-3.5 mb-2.5">
+                            <p className="text-6xl md:text-7xl font-anton leading-none mt-4 mb-3">
                                 {item.title}
                             </p>
-                            <p className="text-lg text-muted-foreground">
+                            <p className="text-xl text-muted-foreground">
                                 {item.duration}
                             </p>
-                            <p className="text-sm text-muted-foreground mt-1 opacity-60">
+                            <p className="text-base text-muted-foreground mt-1 opacity-60">
                                 {item.location}
                             </p>
                         </div>
