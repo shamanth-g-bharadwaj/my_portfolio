@@ -4,7 +4,6 @@ import { MY_STACK } from '@/lib/data';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import Image from 'next/image';
 import React, { useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -72,7 +71,8 @@ const Skills = () => {
                                         key={item.name}
                                     >
                                         <div className="flex-shrink-0">
-                                            <Image
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
                                                 src={item.icon}
                                                 alt={item.name}
                                                 width={40}
