@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#1a1a2e"/>
+  <rect x="0" y="0" width="400" height="4" fill="#e8003d"/>
+  <rect x="0" y="296" width="400" height="4" fill="#e8003d"/>
+  <circle cx="200" cy="150" r="100" fill="#e8003d" opacity="0.04"/>
+  <text x="200" y="120" text-anchor="middle" font-size="22" font-weight="bold" font-family="Arial,sans-serif" fill="white">F1 2025</text>
+<text x="200" y="150" text-anchor="middle" font-size="22" font-weight="bold" font-family="Arial,sans-serif" fill="white">Analytics</text>
+
+  <text x="200" y="194" text-anchor="middle" font-size="13" font-family="Arial,sans-serif" fill="#e8003d" opacity="0.85">Python · Power BI · DAX</text>
+  <text x="200" y="288" text-anchor="middle" font-size="10" font-family="Arial,sans-serif" fill="white" opacity="0.3">[ placeholder — replace with screenshot ]</text>
+</svg>

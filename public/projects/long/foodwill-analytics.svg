@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="550" viewBox="0 0 400 550">
+  <rect width="400" height="550" fill="#052e16"/>
+  <rect x="0" y="0" width="400" height="4" fill="#4ade80"/>
+  <rect x="0" y="546" width="400" height="4" fill="#4ade80"/>
+  <circle cx="200" cy="275" r="133" fill="#4ade80" opacity="0.04"/>
+  <text x="200" y="243" text-anchor="middle" font-size="24" font-weight="bold" font-family="Arial,sans-serif" fill="white">Foodwill</text>
+<text x="200" y="275" text-anchor="middle" font-size="24" font-weight="bold" font-family="Arial,sans-serif" fill="white">SDG 2 Analytics</text>
+
+  <text x="200" y="321" text-anchor="middle" font-size="14" font-family="Arial,sans-serif" fill="#4ade80" opacity="0.85">Python · Power BI · FAO</text>
+  <text x="200" y="538" text-anchor="middle" font-size="10" font-family="Arial,sans-serif" fill="white" opacity="0.3">[ placeholder — replace with screenshot ]</text>
+</svg>
