@@ -14,21 +14,17 @@ const Skills = () => {
 
     useGSAP(
         () => {
-            const slideUpEl =
-                containerRef.current?.querySelectorAll('.slide-up');
-
+            const slideUpEl = containerRef.current?.querySelectorAll('.slide-up');
             if (!slideUpEl?.length) return;
 
-            const tl = gsap.timeline({
+            gsap.timeline({
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: 'top 80%',
                     end: 'bottom 80%',
                     scrub: 0.5,
                 },
-            });
-
-            tl.from('.slide-up', {
+            }).from('.slide-up', {
                 opacity: 0,
                 y: 40,
                 ease: 'none',
@@ -40,19 +36,14 @@ const Skills = () => {
 
     useGSAP(
         () => {
-            const tl = gsap.timeline({
+            gsap.timeline({
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: 'bottom 50%',
                     end: 'bottom 10%',
                     scrub: 1,
                 },
-            });
-
-            tl.to(containerRef.current, {
-                y: -150,
-                opacity: 0,
-            });
+            }).to(containerRef.current, { y: -150, opacity: 0 });
         },
         { scope: containerRef },
     );
@@ -65,25 +56,28 @@ const Skills = () => {
                 <div className="space-y-20">
                     {Object.entries(MY_STACK).map(([key, value]) => (
                         <div className="grid sm:grid-cols-12 group/category" key={key}>
-                            <div className="sm:col-span-5 border-l-2 border-transparent group-hover/category:border-primary pl-0 group-hover/category:pl-3 transition-all duration-500">
-                                <p className="slide-up text-5xl font-anton leading-none uppercase bg-gradient-to-r from-primary to-muted-foreground from-[50%] to-[50%] bg-[length:200%] bg-right bg-clip-text text-transparent group-hover/category:bg-left transition-all duration-500">
+
+                            {/* Category label */}
+                            <div className="sm:col-span-5 mb-6 sm:mb-0 border-l-2 border-transparent group-hover/category:border-primary pl-0 group-hover/category:pl-3 transition-all duration-500">
+                                <p className="slide-up text-5xl font-anton leading-none uppercase text-foreground/40 group-hover/category:text-primary transition-colors duration-500">
                                     {key}
                                 </p>
                             </div>
 
+                            {/* Stack items */}
                             <div className="sm:col-span-7 flex gap-x-11 gap-y-9 flex-wrap">
                                 {value.map((item) => (
                                     <div
                                         className="slide-up flex gap-3.5 items-center leading-none"
                                         key={item.name}
                                     >
-                                        <div>
+                                        <div className="flex-shrink-0">
                                             <Image
                                                 src={item.icon}
                                                 alt={item.name}
-                                                width="40"
-                                                height="40"
-                                                className="max-h-10"
+                                                width={40}
+                                                height={40}
+                                                className="max-h-10 w-auto"
                                             />
                                         </div>
                                         <span className="text-2xl capitalize">
@@ -92,45 +86,7 @@ const Skills = () => {
                                     </div>
                                 ))}
                             </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
 
-    return (
-        <section id="my-stack" ref={containerRef}>
-            <div className="container">
-                <SectionTitle title="My Stack" />
-
-                <div className="space-y-20">
-                    {Object.entries(MY_STACK).map(([key, value]) => (
-                        <div className="grid sm:grid-cols-12" key={key}>
-                            <div className="sm:col-span-5">
-                                <p className="slide-up text-5xl font-anton leading-none text-muted-foreground uppercase">
-                                    {key}
-                                </p>
-                            </div>
-                            <div className="sm:col-span-7 flex gap-x-11 gap-y-9 flex-wrap">
-                                {value.map((item) => (
-                                    <div
-                                        className="slide-up flex gap-3.5 items-center leading-none"
-                                        key={item.name}
-                                    >
-                                        <Image
-                                            src={item.icon}
-                                            alt={item.name}
-                                            width="40"
-                                            height="40"
-                                            className="h-10"
-                                        />
-                                        <span className="text-2xl capitalize">
-                                            {item.name}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
                         </div>
                     ))}
                 </div>

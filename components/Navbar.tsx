@@ -1,15 +1,15 @@
 'use client';
 import { GENERAL_INFO } from '@/lib/data';
 import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const MENU_LINKS = [
-    { name: 'Home',       url: '/' },
-    { name: 'About Me',   url: '/#about-me' },
-    { name: 'Experience', url: '/#my-experience' },
-    { name: 'Education',  url: '/#education' },
-    { name: 'Projects',   url: '/#selected-projects' },
+    { name: 'Home',       url: '/',                    sectionId: 'banner' },
+    { name: 'About Me',   url: '/#about-me',           sectionId: 'about-me' },
+    { name: 'Experience', url: '/#my-experience',      sectionId: 'my-experience' },
+    { name: 'Education',  url: '/#education',          sectionId: 'education' },
+    { name: 'Projects',   url: '/#selected-projects',  sectionId: 'selected-projects' },
 ];
 
 const GitHubIcon = () => (
@@ -25,50 +25,105 @@ const LinkedInIcon = () => (
 );
 
 const SunIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="4"/>
         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
     </svg>
 );
 
 const MoonIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
     </svg>
 );
 
+interface RippleState {
+    x: number;
+    y: number;
+    expanded: boolean;
+    toDark: boolean;
+}
+
 const ThemeToggle = () => {
     const [dark, setDark] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [ripple, setRipple] = useState<RippleState | null>(null);
+    const btnRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
         setMounted(true);
-        const isDark = document.documentElement.classList.contains('dark');
-        setDark(isDark);
+        setDark(document.documentElement.classList.contains('dark'));
     }, []);
 
     const toggle = () => {
+        if (ripple) return; // block during animation
+        const btn = btnRef.current;
+        if (!btn) return;
+
+        const rect = btn.getBoundingClientRect();
+        const x = rect.left + rect.width  / 2;
+        const y = rect.top  + rect.height / 2;
         const newDark = !dark;
-        setDark(newDark);
-        localStorage.setItem('theme', newDark ? 'dark' : 'light');
-        document.documentElement.classList.toggle('dark', newDark);
+
+        // 1. Mount the ripple circle at size 0
+        setRipple({ x, y, expanded: false, toDark: newDark });
+
+        // 2. Two rAFs so the initial paint (size 0) happens before the transition kicks in
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                setRipple(prev => prev ? { ...prev, expanded: true } : null);
+            });
+        });
+
+        // 3. Flip theme when the ripple is roughly half-expanded
+        setTimeout(() => {
+            setDark(newDark);
+            localStorage.setItem('theme', newDark ? 'dark' : 'light');
+            document.documentElement.classList.toggle('dark', newDark);
+        }, 420);
+
+        // 4. Clean up the overlay
+        setTimeout(() => setRipple(null), 880);
     };
 
     if (!mounted) return <div className="w-8 h-8" />;
 
     return (
-        <button
-            onClick={toggle}
-            className={cn(
-                'w-8 h-8 flex items-center justify-center rounded-full',
-                'border border-border/50 transition-all duration-300',
-                'text-muted-foreground hover:text-primary hover:border-primary/40',
-                'hover:bg-primary/5',
+        <>
+            <button
+                ref={btnRef}
+                onClick={toggle}
+                className={cn(
+                    'w-8 h-8 flex items-center justify-center rounded-full',
+                    'border border-border/50 transition-all duration-300',
+                    'text-muted-foreground hover:text-primary hover:border-primary/40',
+                    'hover:bg-primary/5',
+                )}
+                aria-label="Toggle theme"
+            >
+                {dark ? <SunIcon /> : <MoonIcon />}
+            </button>
+
+            {/* ── Circular ripple overlay ── */}
+            {ripple && (
+                <div
+                    aria-hidden
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        zIndex: 150,
+                        pointerEvents: 'none',
+                        clipPath: ripple.expanded
+                            ? `circle(150vmax at ${ripple.x}px ${ripple.y}px)`
+                            : `circle(0px at ${ripple.x}px ${ripple.y}px)`,
+                        backgroundColor: ripple.toDark
+                            ? 'hsl(0, 0%, 13%)'
+                            : 'hsl(220, 30%, 97%)',
+                        transition: 'clip-path 0.78s cubic-bezier(0.76, 0, 0.24, 1)',
+                    }}
+                />
             )}
-            aria-label="Toggle theme"
-        >
-            {dark ? <SunIcon /> : <MoonIcon />}
-        </button>
+        </>
     );
 };
 
@@ -76,12 +131,34 @@ const NAV_OFFSET = 60;
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState('banner');
     const router = useRouter();
 
+    // Scroll-aware backdrop
     useEffect(() => {
         const handler = () => setScrolled(window.scrollY > 30);
         window.addEventListener('scroll', handler, { passive: true });
         return () => window.removeEventListener('scroll', handler);
+    }, []);
+
+    // Active section tracker
+    useEffect(() => {
+        const updateActive = () => {
+            const scrollPos = window.scrollY + NAV_OFFSET + 60;
+            let current = 'banner';
+
+            for (const link of MENU_LINKS) {
+                const el = document.getElementById(link.sectionId);
+                if (el && el.offsetTop <= scrollPos) {
+                    current = link.sectionId;
+                }
+            }
+            setActiveSection(current);
+        };
+
+        window.addEventListener('scroll', updateActive, { passive: true });
+        updateActive();
+        return () => window.removeEventListener('scroll', updateActive);
     }, []);
 
     const handleNavClick = (url: string) => {
@@ -122,16 +199,32 @@ const Navbar = () => {
                     {/* Nav links — top right */}
                     <nav>
                         <ul className="flex items-center gap-6">
-                            {MENU_LINKS.map((link) => (
-                                <li key={link.name}>
-                                    <button
-                                        onClick={() => handleNavClick(link.url)}
-                                        className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 font-medium tracking-wide"
-                                    >
-                                        {link.name}
-                                    </button>
-                                </li>
-                            ))}
+                            {MENU_LINKS.map((link) => {
+                                const isActive = activeSection === link.sectionId;
+                                return (
+                                    <li key={link.name}>
+                                        <button
+                                            onClick={() => handleNavClick(link.url)}
+                                            className={cn(
+                                                'text-sm font-medium tracking-wide transition-all duration-300',
+                                                isActive
+                                                    ? 'text-primary'
+                                                    : 'text-muted-foreground hover:text-primary',
+                                            )}
+                                            style={
+                                                isActive
+                                                    ? {
+                                                          textShadow:
+                                                              '0 0 10px hsl(var(--primary) / 0.7), 0 0 22px hsl(var(--primary) / 0.35)',
+                                                      }
+                                                    : undefined
+                                            }
+                                        >
+                                            {link.name}
+                                        </button>
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </nav>
                 </div>
