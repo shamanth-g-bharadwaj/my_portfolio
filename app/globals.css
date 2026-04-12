@@ -5,8 +5,8 @@
 @layer base {
     /* ── Light theme (default) — teal + amber ── */
     :root {
-        --background: 220 30% 97%;
-        --background-light: 220 20% 93%;
+        --background: 220 18% 92%;
+        --background-light: 220 15% 87%;
         --foreground: 215 30% 10%;
 
         --card: 0 0% 100%;
