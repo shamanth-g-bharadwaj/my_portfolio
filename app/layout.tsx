@@ -41,7 +41,7 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             {/* Theme initialisation — runs before paint to prevent flash */}
             <head>
-                <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme')||'light';if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();` }} />
+                <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme')||'dark';if(t!=='light')document.documentElement.classList.add('dark');}catch(e){}})();` }} />
             </head>
             {/* Add your Google Analytics tag here: <GoogleAnalytics gaId="G-XXXXXXXXXX" /> */}
             <body
