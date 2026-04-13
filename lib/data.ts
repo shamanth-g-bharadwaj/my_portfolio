@@ -37,8 +37,6 @@ export const MY_STACK = {
         { name: 'Python',       icon: '/logo/python.svg' },
         { name: 'pandas',       icon: '/logo/pandas.svg' },
         { name: 'NumPy',        icon: '/logo/numpy.svg' },
-        { name: 'scikit-learn', icon: '/logo/scikitlearn.svg' },
-        { name: 'PySpark',      icon: '/logo/apachespark.svg' },
     ],
     'business analysis': [
         { name: 'Requirements Gathering',   icon: '/logo/requirements.svg' },
