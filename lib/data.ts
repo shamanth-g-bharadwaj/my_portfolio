@@ -33,7 +33,7 @@ export const MY_STACK = {
     ],
     'databases & programming': [
         { name: 'Oracle SQL',   icon: '/logo/oracle.svg' },
-        { name: 'PostgreSQL',   icon: '/logo/postgreSQL.png' },
+        { name: 'PostgreSQL',   icon: '/logo/postgreSQL.svg' },
         { name: 'Python',       icon: '/logo/python.svg' },
         { name: 'pandas',       icon: '/logo/pandas.svg' },
         { name: 'NumPy',        icon: '/logo/numpy.svg' },
@@ -49,7 +49,7 @@ export const MY_STACK = {
         { name: 'Stakeholder Management',   icon: '/logo/stakeholder.svg' },
     ],
     tools: [
-        { name: 'Git',        icon: '/logo/git.png' },
+        { name: 'Git',        icon: '/logo/git.svg' },
         { name: 'JIRA',       icon: '/logo/jira.svg' },
         { name: 'Confluence', icon: '/logo/confluence.svg' },
         { name: 'Notion',     icon: '/logo/notion.svg' },
