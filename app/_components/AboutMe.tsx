@@ -82,11 +82,11 @@ const AboutMe = () => {
                             </p>
                             <p className="mt-3 slide-up-and-fade text-justify">
                                 My career spans enterprise SaaS, global
-                                healthcare, and academic research — giving me
+                                healthcare, and academic research, giving me
                                 fluency in both the technical depth of pipelines
                                 and the business language of the stakeholders
                                 who rely on them. I don&apos;t just surface
-                                numbers — I translate them into decisions.
+                                numbers, I translate them into decisions.
                             </p>
                         </div>
                     </div>
