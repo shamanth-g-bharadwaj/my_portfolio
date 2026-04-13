@@ -50,6 +50,30 @@ const WaveBackground = () => {
             const isDark    = document.documentElement.classList.contains('dark');
             const HORIZON_Y = H * 0.50;
 
+            // ── Hex grid ──────────────────────────────────────────────────
+            const hexSize = 56;
+            const hexW    = hexSize * 2;
+            const hexH    = Math.sqrt(3) * hexSize;
+            ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(40,40,60,0.08)';
+            ctx.lineWidth   = 0.5;
+            const hCols = Math.ceil(W / hexW) + 2;
+            const hRows = Math.ceil(H / hexH) + 2;
+            for (let hr = -1; hr < hRows; hr++) {
+                for (let hc = -1; hc < hCols; hc++) {
+                    const cx = hc * hexW + (hr % 2 === 0 ? 0 : hexSize);
+                    const cy = hr * hexH;
+                    ctx.beginPath();
+                    for (let s = 0; s < 6; s++) {
+                        const angle = (Math.PI / 180) * (60 * s - 30);
+                        const px = cx + hexSize * Math.cos(angle);
+                        const py = cy + hexSize * Math.sin(angle);
+                        if (s === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+                }
+            }
+
             // Dark:  bottom = white,       top = electric blue
             // Light: bottom = teal accent, top = dark foreground
             // → colours invert roles between themes so both halves always pop
